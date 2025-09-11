@@ -15,6 +15,10 @@ run/main_scene="uid://dua7m8a7kywpa"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[dotnet]
+
+project/assembly_name="Agnar Shores of Strife"
+
 [input]
 
 move_up={
