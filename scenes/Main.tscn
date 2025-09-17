@@ -1,26 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://dua7m8a7kywpa"]
+[gd_scene load_steps=4 format=3 uid="uid://dua7m8a7kywpa"]
 
 [ext_resource type="Script" uid="uid://ksyw1bhd1f6" path="res://scripts/Main.gd" id="1_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://fnl8a21mxvnl" path="res://scenes/player/Player.tscn" id="1_elqb8"]
 [ext_resource type="PackedScene" uid="uid://btgpwmvgrolnv" path="res://scenes/levels/Level.tscn" id="3_0bbpv"]
-[ext_resource type="PackedScene" uid="uid://bapmr4wo7ghto" path="res://scenes/enemies/GobblinTorch.tscn" id="3_vcsgt"]
-[ext_resource type="PackedScene" uid="uid://ckggmkxbc7sgs" path="res://scenes/enemies/Pawn.tscn" id="4_c01mt"]
-[ext_resource type="PackedScene" uid="uid://dhv55svf35k8n" path="res://scenes/enemies/Knight.tscn" id="4_rarhs"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0bbpv")
 
 [node name="Player" parent="." instance=ExtResource("1_elqb8")]
-
-[node name="GoblinTorch" parent="." instance=ExtResource("3_vcsgt")]
-position = Vector2(558, 256)
-
-[node name="Pawn" parent="." instance=ExtResource("4_c01mt")]
-position = Vector2(450, 350)
-
-[node name="Knight" parent="." instance=ExtResource("4_rarhs")]
-position = Vector2(431, -1)
+z_index = 2
 
 [node name="Level" parent="." instance=ExtResource("3_0bbpv")]
-z_index = -1
 position = Vector2(-357, -65)

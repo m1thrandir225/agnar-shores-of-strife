@@ -4,8 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://eabrfbg015qx" path="res://assets/sprites/Warrior_Blue.png" id="2_emi52"]
 [ext_resource type="Texture2D" uid="uid://ba0x8iaaj1bae" path="res://assets/sprites/Torch_Blue.png" id="2_ln4yo"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ln4yo"]
-radius = 27.4206
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ln4yo"]
+radius = 16.0
+height = 44.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6hmjy"]
 atlas = ExtResource("2_ln4yo")
@@ -209,8 +210,8 @@ animations = [{
 script = ExtResource("1_lyxlb")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_ln4yo")
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_ln4yo")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

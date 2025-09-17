@@ -217,14 +217,14 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1hh02"]
-size = Vector2(27, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_4kuee"]
+radius = 3.9929786
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfjak"]
-size = Vector2(13.25, 20)
+[sub_resource type="CircleShape2D" id="CircleShape2D_gfjak"]
+radius = 3.5892396
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
-scale = Vector2(3, 3)
+scale = Vector2(2, 2)
 script = ExtResource("1_gfjak")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -234,14 +234,16 @@ animation = &"attack"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3.5, 4)
-shape = SubResource("RectangleShape2D_1hh02")
+position = Vector2(-3.5714285, 14.285715)
+shape = SubResource("CircleShape2D_4kuee")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3.5, 3.5)
 position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 
 [node name="AttackArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(3.625, 2.75)
-shape = SubResource("RectangleShape2D_gfjak")
+position = Vector2(1.4285712, 2.857143)
+shape = SubResource("CircleShape2D_gfjak")

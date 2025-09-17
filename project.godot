@@ -12,8 +12,13 @@ config_version=5
 
 config/name="Agnar Shores of Strife"
 run/main_scene="uid://dua7m8a7kywpa"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 
 [dotnet]
 

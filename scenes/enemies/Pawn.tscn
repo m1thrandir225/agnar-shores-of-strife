@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://b7ylrsmwu8ju3" path="res://scripts/Knight.gd" id="1_y488f"]
 [ext_resource type="Texture2D" uid="uid://eqk4wcf7fxro" path="res://assets/sprites/Pawn_Blue.png" id="2_1yd58"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1yd58"]
-radius = 22.0227
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1yd58"]
+radius = 17.0
+height = 40.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y488f"]
 atlas = ExtResource("2_1yd58")
@@ -201,8 +202,7 @@ animations = [{
 script = ExtResource("1_y488f")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(1, 0)
-shape = SubResource("CircleShape2D_1yd58")
+shape = SubResource("CapsuleShape2D_1yd58")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

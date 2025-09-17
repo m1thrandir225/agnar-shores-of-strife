@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://eabrfbg015qx" path="res://assets/sprites/Warrior_Blue.png" id="1_e2clt"]
 [ext_resource type="Script" uid="uid://b7ylrsmwu8ju3" path="res://scripts/Knight.gd" id="1_qpj6w"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qpj6w"]
-radius = 28.0179
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qpj6w"]
+radius = 16.0
+height = 44.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4iopq"]
 atlas = ExtResource("1_e2clt")
@@ -201,10 +202,11 @@ animations = [{
 script = ExtResource("1_qpj6w")
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
-shape = SubResource("CircleShape2D_qpj6w")
+position = Vector2(-1, -6)
+shape = SubResource("CapsuleShape2D_qpj6w")
 
 [node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -2)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_a0n3u")
 animation = &"attack"
