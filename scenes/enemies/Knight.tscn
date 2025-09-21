@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://dhv55svf35k8n"]
+[gd_scene load_steps=44 format=3 uid="uid://dhv55svf35k8n"]
 
 [ext_resource type="Texture2D" uid="uid://eabrfbg015qx" path="res://assets/sprites/Warrior_Blue.png" id="1_e2clt"]
 [ext_resource type="Script" uid="uid://b7ylrsmwu8ju3" path="res://scripts/Knight.gd" id="1_qpj6w"]
+[ext_resource type="Texture2D" uid="uid://bfqnlvsf5cd37" path="res://assets/sprites/Dead.png" id="3_0v14h"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qpj6w"]
 radius = 12.0
@@ -30,6 +31,62 @@ region = Rect2(768, 384, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_82mfq"]
 atlas = ExtResource("1_e2clt")
 region = Rect2(960, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0n3u"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wre74"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cffj8"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x02qy"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7k8w"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgxqh"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cn66g"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrk2x"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3f7v"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c15i5"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ei0sk"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jjr1e"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(512, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xhrxu"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(640, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgkkg"]
+atlas = ExtResource("3_0v14h")
+region = Rect2(768, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0v14h"]
 atlas = ExtResource("1_e2clt")
@@ -130,6 +187,53 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_a0n3u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wre74")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cffj8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x02qy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j7k8w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgxqh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cn66g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hrk2x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3f7v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c15i5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ei0sk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jjr1e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xhrxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dgkkg")
+}],
+"loop": false,
+"name": &"die",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_0v14h")
 }, {
 "duration": 1.0,
@@ -209,9 +313,9 @@ shape = SubResource("CapsuleShape2D_qpj6w")
 position = Vector2(0, -2)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_a0n3u")
-animation = &"attack"
+animation = &"die"
 autoplay = "idle"
-frame_progress = 0.598704
+frame_progress = 0.1945464
 
 [node name="AttackArea" type="Area2D" parent="."]
 

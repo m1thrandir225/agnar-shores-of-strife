@@ -20,13 +20,15 @@ var is_attacking: bool = false
 var is_running: bool = false
 var attack_timer: float = 0.0
 var can_attack: bool = true
-
+var is_invincible: bool = false
+var invincibility_timer: float = 0.0
 var input_vector: Vector2 = Vector2.ZERO
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var attack_area: Area2D = $AttackArea
 @onready var attack_collision: CollisionShape2D = $AttackArea/CollisionShape2D
+@onready var camera: Camera2D = $Camera2D
 
 signal health_changed(new_health: int)
 signal player_died
@@ -56,6 +58,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
+
+	if invincibility_timer > 0:
+		invincibility_timer -= delta
+		if invincibility_timer <= 0:
+			is_invincible = false
+			stop_invincibility_flash()
 	
 	if attack_timer > 0:
 		attack_timer -= delta
@@ -159,19 +167,95 @@ func _on_attack_area_body_entered(body) -> void:
 		body.take_damage(attack_damage)
 
 func _on_attack_area_body_exited(body) -> void:
-	pass
+	if not is_attacking:
+		return
+	
+	if body.has_method("take_damage") and body != self:
+		body.take_damage(attack_damage)
 
 func take_damage(damage: int) -> void:
-	if is_dead:
+	if is_dead or is_invincible:
 		return
 	
 	current_health -= damage
 	current_health = max(0, current_health)
 	health_changed.emit(current_health)
-	
+
+	show_damage_effect(damage)
+	flash_red_effect()
+	screen_shake_effect()
+
+	set_invincible(0.5)
+
 	
 	if current_health <= 0:
 		die()
+
+
+func show_damage_effect(damage: int) -> void:
+	var damage_label = Label.new()
+	damage_label.text = "-" + str(damage)
+	damage_label.modulate = Color.RED
+	damage_label.position = global_position + Vector2(randf_range(-20, 20), -30)
+	damage_label.z_index = 10
+
+	damage_label.add_theme_font_size_override("font_size", 24)
+	
+	get_tree().current_scene.add_child(damage_label)
+	
+	var tween = create_tween()
+	tween.parallel().tween_property(damage_label, "position", damage_label.position + Vector2(0, -60), 1.5)
+	tween.parallel().tween_property(damage_label, "modulate:a", 0.0, 1.5)
+	tween.parallel().tween_property(damage_label, "scale", Vector2(1.2, 1.2), 0.2)
+	tween.tween_property(damage_label, "scale", Vector2(1.0, 1.0), 0.3)
+	
+	tween.tween_callback(damage_label.queue_free)
+
+func flash_red_effect() -> void:
+	if not animated_sprite:
+		return
+	
+	# Flash red quickly
+	animated_sprite.modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	if animated_sprite and not is_invincible:
+		animated_sprite.modulate = Color.WHITE
+
+func screen_shake_effect() -> void:
+	if camera:
+		var original_pos = camera.global_position
+		var shake_tween = create_tween()
+		shake_tween.set_loops(6)
+		shake_tween.tween_property(camera, "global_position", original_pos + Vector2(randf_range(-3, 3), randf_range(-3, 3)), 0.05)
+		shake_tween.tween_property(camera, "global_position", original_pos, 0.05)
+
+func set_invincible(duration: float) -> void:
+	is_invincible = true
+	invincibility_timer = duration
+
+	start_invincibility_flash()
+
+func start_invincibility_flash() -> void:
+	if not animated_sprite or not is_invincible:
+		return
+	
+	var flash_tween = create_tween()
+	flash_tween.set_loops()
+	flash_tween.tween_property(animated_sprite, "modulate:a", 0.3, 0.1)
+	flash_tween.tween_property(animated_sprite, "modulate:a", 1.0, 0.1)
+	
+	animated_sprite.set_meta("flash_tween", flash_tween)
+
+func stop_invincibility_flash() -> void:
+	if not animated_sprite:
+		return
+	
+	var flash_tween = animated_sprite.get_meta("flash_tween", null)
+	if flash_tween:
+		flash_tween.kill()
+		animated_sprite.remove_meta("flash_tween")
+	
+	animated_sprite.modulate = Color.WHITE
 
 func heal(amount: int) -> void:
 	var old_health = current_health

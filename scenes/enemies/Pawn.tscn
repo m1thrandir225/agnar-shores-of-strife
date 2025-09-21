@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://ckggmkxbc7sgs"]
+[gd_scene load_steps=44 format=3 uid="uid://ckggmkxbc7sgs"]
 
 [ext_resource type="Script" uid="uid://cxknweda10efc" path="res://scripts/Pawn.gd" id="1_1yd58"]
 [ext_resource type="Texture2D" uid="uid://eqk4wcf7fxro" path="res://assets/sprites/Pawn_Blue.png" id="2_1yd58"]
+[ext_resource type="Texture2D" uid="uid://bfqnlvsf5cd37" path="res://assets/sprites/Dead.png" id="3_y488f"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1yd58"]
 radius = 17.0
@@ -30,6 +31,62 @@ region = Rect2(768, 384, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8wils"]
 atlas = ExtResource("2_1yd58")
 region = Rect2(960, 384, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g67rg"]
+atlas = ExtResource("3_y488f")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xvtx4"]
+atlas = ExtResource("3_y488f")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e504q"]
+atlas = ExtResource("3_y488f")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ew8ve"]
+atlas = ExtResource("3_y488f")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylrih"]
+atlas = ExtResource("3_y488f")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amfvu"]
+atlas = ExtResource("3_y488f")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vajmw"]
+atlas = ExtResource("3_y488f")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s0t6h"]
+atlas = ExtResource("3_y488f")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4bm4"]
+atlas = ExtResource("3_y488f")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ik8kk"]
+atlas = ExtResource("3_y488f")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apx8q"]
+atlas = ExtResource("3_y488f")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkd4g"]
+atlas = ExtResource("3_y488f")
+region = Rect2(512, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30ka4"]
+atlas = ExtResource("3_y488f")
+region = Rect2(640, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6c0l"]
+atlas = ExtResource("3_y488f")
+region = Rect2(768, 128, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5c4jw"]
 atlas = ExtResource("2_1yd58")
@@ -130,6 +187,53 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_g67rg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xvtx4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e504q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ew8ve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ylrih")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amfvu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vajmw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s0t6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4bm4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ik8kk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apx8q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vkd4g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30ka4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6c0l")
+}],
+"loop": false,
+"name": &"die",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_5c4jw")
 }, {
 "duration": 1.0,
@@ -207,9 +311,9 @@ shape = SubResource("CapsuleShape2D_1yd58")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_a0n3u")
-animation = &"special_attack"
+animation = &"die"
 autoplay = "idle"
-frame_progress = 0.635284
+frame_progress = 0.25180015
 
 [node name="AttackArea" type="Area2D" parent="."]
 

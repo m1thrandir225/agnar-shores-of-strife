@@ -56,7 +56,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_0c57d")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 10.0
 }]
 
@@ -68,8 +68,8 @@ script = ExtResource("1_o2fbm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_lfcy6")
-autoplay = "default"
-frame_progress = 0.15977627
+animation = &"idle"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4jc0i")

@@ -320,6 +320,8 @@ func _on_animation_finished() -> void:
 	# End attack when attack animation finishes
 	if is_attacking and animated_sprite.animation == "attack":
 		end_attack()
+	elif is_dead and animated_sprite.animation == "die":
+		queue_free()
 
 func lose_target() -> void:
 	target_player = null
@@ -343,11 +345,8 @@ func take_damage(damage: int) -> void:
 	
 	# Flash red when hit
 	if animated_sprite:
-		animated_sprite.modulate = Color.RED
-		await get_tree().create_timer(0.1).timeout
-		if animated_sprite:
-			animated_sprite.modulate = Color.WHITE
-	
+		flash_red_effect()
+
 	
 	if current_health <= 0:
 		die()
@@ -362,25 +361,49 @@ func take_damage(damage: int) -> void:
 				current_state = EnemyState.PATROLLING
 				set_new_patrol_direction()
 
+func flash_red_effect() -> void:
+	if not animated_sprite:
+		return
+	
+	animated_sprite.modulate = Color.RED
+	var flash_tween = create_tween()
+	flash_tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.5)
+
 func die() -> void:
 	if is_dead:
 		return
-	
+
 	is_dead = true
 	current_state = EnemyState.DEAD
 	velocity = Vector2.ZERO
-	
+
+	is_attacking = false
+	attack_timer = 0.0
+	attack_duration_timer = 0.0
+
+	target_player = null
+	last_known_player_position = Vector2.ZERO
+	patrol_timer = 0.0
+	patrol_wait_time = 0.0
+	patrol_direction = Vector2.ZERO
+	patrol_speed = 30.0
+	original_position = Vector2.ZERO
+	max_patrol_distance = 150.0
+
 	# Disable all areas
 	if attack_area:
 		attack_area.monitoring = false
 	if detection_area:
 		detection_area.monitoring = false
-	
+
+	if animated_sprite:
+		animated_sprite.play("die")
+
 	enemy_died.emit()
 	
 	# Wait for death animation, then remove
-	await get_tree().create_timer(2.0).timeout
-	queue_free()
+	# await get_tree().create_timer(2.0).timeout
+	# queue_free()
 
 func _on_detection_area_entered(body) -> void:
 	if body is Player and not is_dead:

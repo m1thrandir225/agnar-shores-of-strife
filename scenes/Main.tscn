@@ -13,7 +13,7 @@ script = ExtResource("1_0bbpv")
 z_index = 2
 
 [node name="Level" parent="." instance=ExtResource("3_0bbpv")]
-position = Vector2(-357, -65)
+position = Vector2(-349, -59)
 
 [node name="EnemyManager" type="Node" parent="."]
 script = ExtResource("4_vcsgt")

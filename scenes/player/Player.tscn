@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://fnl8a21mxvnl"]
+[gd_scene load_steps=31 format=3 uid="uid://fnl8a21mxvnl"]
 
 [ext_resource type="Script" uid="uid://bc44bjm0epkrl" path="res://scripts/Player.gd" id="1_gfjak"]
 [ext_resource type="Texture2D" uid="uid://csnve8t2y8384" path="res://assets/sprites/agnar.png" id="2_4kuee"]
+[ext_resource type="Script" uid="uid://dpvncp5ekxw4x" path="res://scripts/Camera2D.gd" id="3_4kuee"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_524rm"]
 atlas = ExtResource("2_4kuee")
@@ -243,6 +244,7 @@ shape = SubResource("CircleShape2D_4kuee")
 zoom = Vector2(3.5, 3.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
+script = ExtResource("3_4kuee")
 
 [node name="AttackArea" type="Area2D" parent="."]
 
