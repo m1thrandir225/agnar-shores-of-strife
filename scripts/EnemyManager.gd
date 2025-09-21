@@ -27,13 +27,10 @@ func find_and_register_enemies() -> void:
 				register_enemy(enemy)
 	
 	total_enemies = enemies.size()
-	print("EnemyManager found ", total_enemies, " enemies")
 	
-	# Emit initial count
 	enemy_count_updated.emit(enemies_defeated, total_enemies)
 	
 	if total_enemies == 0:
-		print("No enemies in level - enemy requirement auto-completed")
 		GameManager.all_enemies_defeated()
 
 func find_enemies_recursive(node: Node) -> void:
@@ -45,37 +42,29 @@ func find_enemies_recursive(node: Node) -> void:
 
 func register_enemy(enemy: Enemy) -> void:
 	if enemy in enemies:
-		return # Already registered
+		return
 	
 	enemies.append(enemy)
 	
-	# Connect to enemy death signal
 	enemy.enemy_died.connect(_on_enemy_died.bind(enemy))
 	
-	# Add enemy to group for easy finding
 	if not enemy.is_in_group("enemies"):
 		enemy.add_to_group("enemies")
 	
-	print("Registered enemy: ", enemy.get_class())
 
 func _on_enemy_died(enemy: Enemy) -> void:
 	if enemy in enemies:
 		enemies.erase(enemy)
 		enemies_defeated += 1
 		
-		# Give HP reward for killing knights
 		if enemy.get_enemy_type() == "Knight":
 			var player = get_tree().get_first_node_in_group("player")
 			if player and player.has_method("heal"):
 				player.heal(10)
-				print("Knight defeated! Player gained 10 HP")
 		
-		print("Enemy defeated! Remaining: ", enemies.size(), "/", total_enemies)
 		enemy_count_updated.emit(enemies_defeated, total_enemies)
 		
-		# Check if all enemies are defeated
 		if enemies.is_empty():
-			print("All enemies defeated!")
 			all_enemies_defeated.emit()
 			GameManager.all_enemies_defeated()
 

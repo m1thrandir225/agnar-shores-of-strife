@@ -2,14 +2,13 @@ extends Node2D
 
 @onready var player: Player = $Player
 @onready var camera: Camera2D = $Player/Camera2D
-@onready var gem: Gem = $Gem # Changed from horn_part
+@onready var gem: Gem = $Gem
 @onready var enemy_manager: EnemyManager = $EnemyManager
 @onready var game_hud: CanvasLayer = $GameHUD
 
 func _ready() -> void:
 	print("Level ", GameManager.current_level, " started")
 	
-	# Reset level requirements in GameManager
 	GameManager.start_new_level()
 	
 	if player:
@@ -18,7 +17,6 @@ func _ready() -> void:
 		player.player_died.connect(_on_player_died)
 		player.player_respawned.connect(_on_player_respawned)
 		
-		# Give level start HP bonus (except for level 1)
 		if GameManager.current_level > 1:
 			player.on_level_started()
 	
@@ -47,7 +45,6 @@ func setup_enemy_manager() -> void:
 		enemy_manager.name = "EnemyManager"
 		add_child(enemy_manager)
 	
-	# Connect to enemy manager signals
 	enemy_manager.all_enemies_defeated.connect(_on_all_enemies_defeated)
 	enemy_manager.enemy_count_updated.connect(_on_enemy_count_updated)
 
@@ -95,7 +92,6 @@ func _on_player_respawned() -> void:
 
 func _on_gem_collected(gem_number: int) -> void:
 	print("Gem ", gem_number, " has been added to Agnar's collection!")
-	# The GameHUD handles gem collection through its own signal connection
 
 func _on_level_completed(level_number: int) -> void:
 	print("Level ", level_number, " completed! Another gem secured...")
@@ -104,7 +100,6 @@ func _on_level_completed(level_number: int) -> void:
 
 func _on_game_completed() -> void:
 	print("All 4 mystical gems collected! Agnar's power is complete!")
-	# The GameHUD handles game completion through its own signal connection
 
 func setup_hud() -> void:
 	if not game_hud:

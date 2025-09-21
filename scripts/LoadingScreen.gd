@@ -20,37 +20,31 @@ var current_progress: float = 0.0
 var target_progress: float = 100.0
 
 func _ready() -> void:
-	# IMPORTANT: Set this Control to fill the entire screen
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
 	setup_ui()
 	show_random_tip()
 
 func setup_ui() -> void:
-	# Background fills entire screen
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	background.color = Color.BLACK
 	
-	# Center container fills screen and centers content
 	center_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
-	# Loading label
 	loading_label.text = "Loading..."
 	loading_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	loading_label.add_theme_font_size_override("font_size", 48) # Bigger for fullscreen
+	loading_label.add_theme_font_size_override("font_size", 48)
 	loading_label.add_theme_color_override("font_color", Color.WHITE)
 	
-	# Progress bar
 	progress_bar.min_value = 0
 	progress_bar.max_value = 100
 	progress_bar.value = 0
-	progress_bar.custom_minimum_size = Vector2(600, 40) # Bigger progress bar
+	progress_bar.custom_minimum_size = Vector2(600, 40)
 	
-	# Tip label
 	tip_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	tip_label.add_theme_font_size_override("font_size", 24) # Bigger font
+	tip_label.add_theme_font_size_override("font_size", 24)
 	tip_label.add_theme_color_override("font_color", Color.LIGHT_GRAY)
-	tip_label.custom_minimum_size = Vector2(800, 100) # Bigger area for text wrapping
+	tip_label.custom_minimum_size = Vector2(800, 100)
 	tip_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
 func show_random_tip() -> void:
@@ -62,12 +56,10 @@ func load_scene(scene_path: String) -> void:
 	start_loading()
 
 func start_loading() -> void:
-	# Simulate loading with progress
 	var tween = create_tween()
 	tween.tween_method(update_progress, 0.0, 100.0, 2.0)
 	await tween.finished
 	
-	# Load the actual scene
 	if ResourceLoader.exists(target_scene):
 		get_tree().change_scene_to_file(target_scene)
 	else:
@@ -76,7 +68,6 @@ func start_loading() -> void:
 func update_progress(value: float) -> void:
 	progress_bar.value = value
 	
-	# Update loading text based on progress
 	if value < 33:
 		loading_label.text = "Loading..."
 	elif value < 66:

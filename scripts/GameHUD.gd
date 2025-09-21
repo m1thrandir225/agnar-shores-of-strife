@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-# UI references (created dynamically)
 var health_bar: ProgressBar
 var health_label: Label
 var gems_progress: Label
@@ -12,11 +11,9 @@ var main_control: Control
 var is_paused: bool = false
 
 func _ready() -> void:
-	# Create the main control first
 	setup_main_control()
 	
 	
-	# Connect to GameManager signals
 	GameManager.gem_collected.connect(_on_gem_collected)
 	GameManager.level_requirements_updated.connect(_on_requirements_updated)
 	GameManager.game_completed.connect(_on_game_completed)
@@ -29,11 +26,10 @@ func _input(event: InputEvent) -> void:
 		toggle_pause()
 
 func setup_main_control() -> void:
-	# Create the main control container that fills the entire screen
 	main_control = Control.new()
 	main_control.name = "MainControl"
 	main_control.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	main_control.mouse_filter = Control.MOUSE_FILTER_PASS # Allow clicks to pass through
+	main_control.mouse_filter = Control.MOUSE_FILTER_PASS
 	add_child(main_control)
 	
 
@@ -42,7 +38,6 @@ func setup_ui() -> void:
 	create_pause_menu()
 
 func create_repositioned_ui() -> void:
-	# Create Health Panel (TOP LEFT)
 	var health_panel = create_ui_panel()
 	health_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT)
 	health_panel.position = Vector2(20, 20)
@@ -71,7 +66,6 @@ func create_repositioned_ui() -> void:
 	health_bar.custom_minimum_size = Vector2(240, 20)
 	health_container.add_child(health_bar)
 	
-	# Create Gems Panel (TOP RIGHT)
 	var gems_panel = create_ui_panel()
 	gems_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
 	gems_panel.position = Vector2(-320, 20)
@@ -89,7 +83,6 @@ func create_repositioned_ui() -> void:
 	gems_progress.add_theme_color_override("font_color", Color.GOLD)
 	gems_center.add_child(gems_progress)
 	
-	# Create Objectives Panel (BOTTOM LEFT)
 	var objectives_panel = create_ui_panel()
 	objectives_panel.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
 	objectives_panel.position = Vector2(20, -100)
@@ -119,7 +112,6 @@ func create_repositioned_ui() -> void:
 	objectives_container.add_child(enemy_objective)
 
 func create_pause_menu() -> void:
-	# Create pause menu container
 	pause_menu = Control.new()
 	pause_menu.name = "PauseMenu"
 	pause_menu.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -127,18 +119,15 @@ func create_pause_menu() -> void:
 	pause_menu.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	main_control.add_child(pause_menu)
 	
-	# Semi-transparent background
 	var pause_bg = ColorRect.new()
 	pause_bg.color = Color(0, 0, 0, 0.8)
 	pause_bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	pause_menu.add_child(pause_bg)
 	
-	# Center container for menu items
 	var center_container = CenterContainer.new()
 	center_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	pause_menu.add_child(center_container)
 	
-	# Menu content
 	var menu_panel = create_ui_panel()
 	menu_panel.custom_minimum_size = Vector2(400, 300)
 	center_container.add_child(menu_panel)
@@ -148,7 +137,6 @@ func create_pause_menu() -> void:
 	menu_container.add_theme_constant_override("separation", 20)
 	menu_panel.add_child(menu_container)
 	
-	# Add some margin to the menu
 	var menu_margin = MarginContainer.new()
 	menu_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	menu_margin.add_theme_constant_override("margin_left", 20)
@@ -162,7 +150,6 @@ func create_pause_menu() -> void:
 	inner_container.add_theme_constant_override("separation", 20)
 	menu_margin.add_child(inner_container)
 	
-	# Pause title
 	var pause_title = Label.new()
 	pause_title.text = "GAME PAUSED"
 	pause_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -170,7 +157,6 @@ func create_pause_menu() -> void:
 	pause_title.add_theme_color_override("font_color", Color.WHITE)
 	inner_container.add_child(pause_title)
 	
-	# Resume button
 	var resume_button = Button.new()
 	resume_button.text = "Resume Game"
 	resume_button.custom_minimum_size = Vector2(300, 50)
@@ -178,7 +164,6 @@ func create_pause_menu() -> void:
 	resume_button.pressed.connect(toggle_pause)
 	inner_container.add_child(resume_button)
 	
-	# Main menu button
 	var main_menu_button = Button.new()
 	main_menu_button.text = "Main Menu"
 	main_menu_button.custom_minimum_size = Vector2(300, 50)
@@ -186,7 +171,6 @@ func create_pause_menu() -> void:
 	main_menu_button.pressed.connect(_on_main_menu_pressed)
 	inner_container.add_child(main_menu_button)
 	
-	# Quit button
 	var quit_button = Button.new()
 	quit_button.text = "Quit Game"
 	quit_button.custom_minimum_size = Vector2(300, 50)
@@ -197,10 +181,8 @@ func create_pause_menu() -> void:
 func create_ui_panel() -> PanelContainer:
 	var panel = PanelContainer.new()
 	
-	# Make sure panel doesn't block input to its children
-	panel.mouse_filter = Control.MOUSE_FILTER_PASS # ✅ Allow input to children
+	panel.mouse_filter = Control.MOUSE_FILTER_PASS
 	
-	# Panel styling
 	var style_box = StyleBoxFlat.new()
 	style_box.bg_color = Color(0.1, 0.1, 0.1, 0.9)
 	style_box.border_color = Color(0.4, 0.4, 0.4, 1.0)
@@ -225,7 +207,7 @@ func toggle_pause() -> void:
 
 func show_game_over() -> void:
 	get_tree().paused = true
-	create_victory_screen()
+	create_game_over_screen()
 
 func show_victory() -> void:
 	get_tree().paused = true
@@ -352,7 +334,6 @@ func create_victory_screen() -> void:
 	menu_button.pressed.connect(_on_main_menu_pressed)
 	container.add_child(menu_button)
 
-# Signal handlers
 func _on_restart_pressed() -> void:
 	get_tree().paused = false
 	GameManager.restart_game()
