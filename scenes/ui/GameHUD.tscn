@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://c56u2vfqitk1w"]
+
+[ext_resource type="Script" uid="uid://xbanxx4rxg4f" path="res://scripts/GameHUD.gd" id="1_f41ut"]
+
+[node name="GameHud" type="CanvasLayer"]
+script = ExtResource("1_f41ut")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TopPanel" type="Panel" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/TopPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthContainer" type="VBoxContainer" parent="Control/TopPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="HealthLabel" type="Label" parent="Control/TopPanel/HBoxContainer/HealthContainer"]
+layout_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="Control/TopPanel/HBoxContainer/HealthContainer"]
+layout_mode = 2
+
+[node name="VSeparator" type="VSeparator" parent="Control/TopPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="GemsContainer" type="VBoxContainer" parent="Control/TopPanel/HBoxContainer"]
+layout_mode = 2
+
+[node name="GemsLabel" type="Label" parent="Control/TopPanel/HBoxContainer/GemsContainer"]
+layout_mode = 2
+
+[node name="GemsProgress" type="Label" parent="Control/TopPanel/HBoxContainer/GemsContainer"]
+layout_mode = 2
+
+[node name="ObjectivesContainer" type="VBoxContainer" parent="Control/TopPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ObjectivesTitle" type="Label" parent="Control/TopPanel/ObjectivesContainer"]
+layout_mode = 2
+
+[node name="GemObjective" type="Label" parent="Control/TopPanel/ObjectivesContainer"]
+layout_mode = 2
+
+[node name="EnemyObjective" type="Label" parent="Control/TopPanel/ObjectivesContainer"]
+layout_mode = 2
+
+[node name="PauseMenu" type="Control" parent="Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

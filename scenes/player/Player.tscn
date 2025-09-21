@@ -220,8 +220,8 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_4kuee"]
 radius = 3.9929786
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gfjak"]
-radius = 3.5892396
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfjak"]
+size = Vector2(26.125, 6.5)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(2, 2)
@@ -232,6 +232,8 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_mndc6")
 animation = &"attack"
 autoplay = "idle"
+frame = 5
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3.5714285, 14.285715)
@@ -245,5 +247,5 @@ position_smoothing_speed = 8.0
 [node name="AttackArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(1.4285712, 2.857143)
-shape = SubResource("CircleShape2D_gfjak")
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_gfjak")

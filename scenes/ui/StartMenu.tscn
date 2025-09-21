@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw1jghnivn1pp"]
+
+[ext_resource type="Script" uid="uid://d3peqtxq6ht5b" path="res://scripts/StartMenu.gd" id="1_hbvfd"]
+
+[node name="StartMenu" type="Control"]
+custom_minimum_size = Vector2(1000, 1000)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hbvfd")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(5.8805594, 9.454751)
+color = Color(0.4, 1, 1, 1)
+
+[node name="Container" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 119.0
+offset_bottom = 147.0
+alignment = 1
+
+[node name="Title" type="Label" parent="Container"]
+layout_mode = 2
+text = "Agnar:"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Container"]
+layout_mode = 2
+text = "Shores of Strife"
+horizontal_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="Container"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="Container/ButtonContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="QuitButton" type="Button" parent="Container/ButtonContainer"]
+layout_mode = 2
+text = "Quit
+"
+
+[node name="Version" type="Label" parent="Container"]
+layout_mode = 2
+text = "V 1.0.0"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

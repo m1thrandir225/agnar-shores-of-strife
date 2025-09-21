@@ -11,8 +11,10 @@ class_name Player
 # Combat stats
 @export var max_health: int = 100
 @export var attack_damage: int = 25
-@export var attack_range: float = 50.0
+@export var attack_range: float = 150.0
 @export var attack_cooldown: float = 0.3 # Reduced cooldown
+@export var attack_duration: float = 0.8 # How long attack animation lasts
+@export var attack_duration_timer: float = 0.0
 
 # Current stats
 var current_health: int
@@ -41,14 +43,26 @@ func _ready() -> void:
 	current_health = max_health
 	health_changed.emit(current_health)
 	
+	# Add player to group so enemies can find it
+	add_to_group("player")
+	print("✓ Player added to 'player' group")
+	
+	collision_layer = 1
+	collision_mask = 6
+	
 	# Setup attack area
 	if attack_area:
+		attack_area.monitoring = false # Start with monitoring disabled
 		attack_area.body_entered.connect(_on_attack_area_body_entered)
-		attack_area.monitoring = false
+		attack_area.body_exited.connect(_on_attack_area_body_exited)
+		attack_area.collision_layer = 0
+		attack_area.collision_mask = 4
 	
-	# Connect to animation finished signal to handle attack completion
+	# Connect animation signals
 	if animated_sprite:
 		animated_sprite.animation_finished.connect(_on_animation_finished)
+	
+	print("Player initialized with ", current_health, "/", max_health, " health")
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -141,15 +155,18 @@ func perform_attack() -> void:
 		return
 	
 	print("Agnar attacks!")
-
 	
 	is_attacking = true
 	can_attack = false
 	attack_timer = attack_cooldown
+	attack_duration_timer = attack_duration
 	
 	# Enable attack detection
 	if attack_area:
 		attack_area.monitoring = true
+		print("Attack area monitoring enabled")
+	else:
+		print("ERROR: No attack area found!")
 	
 	# Emit signal for other systems
 	player_attacked.emit()
@@ -162,9 +179,21 @@ func _on_animation_finished() -> void:
 		print("Attack finished!")
 
 func _on_attack_area_body_entered(body) -> void:
+	print("Player attack area detected: ", body.name, " of type: ", body.get_class())
+	
+	# Only deal damage if actively attacking
+	if not is_attacking:
+		print("Not attacking, ignoring collision")
+		return
+	
 	if body.has_method("take_damage") and body != self:
 		body.take_damage(attack_damage)
-		print("Hit enemy for ", attack_damage, " damage!")
+		print("Hit ", body.get_class(), " for ", attack_damage, " damage!")
+	else:
+		print("Body doesn't have take_damage method or is self")
+
+func _on_attack_area_body_exited(body) -> void:
+	print("Player attack area exited: ", body.name, " of type: ", body.get_class())
 
 func take_damage(damage: int) -> void:
 	if is_dead:
@@ -179,28 +208,65 @@ func take_damage(damage: int) -> void:
 	if current_health <= 0:
 		die()
 
+# Health management functions
 func heal(amount: int) -> void:
-	if is_dead:
-		return
+	var old_health = current_health
+	current_health = min(current_health + amount, max_health)
+	var actual_heal = current_health - old_health
 	
-	current_health += amount
-	current_health = min(max_health, current_health)
-	health_changed.emit(current_health)
+	if actual_heal > 0:
+		print("Player healed for ", actual_heal, " HP (", old_health, " -> ", current_health, ")")
+		health_changed.emit(current_health)
+		
+		# Show heal effect
+		show_heal_effect(actual_heal)
+	else:
+		print("Player already at max health")
+
+func show_heal_effect(amount: int) -> void:
+	# Create floating heal text
+	var heal_label = Label.new()
+	heal_label.text = "+" + str(amount) + " HP"
+	heal_label.modulate = Color.GREEN
+	heal_label.position = global_position + Vector2(0, -30)
+	heal_label.z_index = 10
+	
+	# Add to main scene temporarily
+	get_tree().current_scene.add_child(heal_label)
+	
+	# Animate the heal text
+	var tween = create_tween()
+	tween.parallel().tween_property(heal_label, "position", heal_label.position + Vector2(0, -50), 1.0)
+	tween.parallel().tween_property(heal_label, "modulate:a", 0.0, 1.0)
+	
+	# Remove after animation
+	tween.tween_callback(heal_label.queue_free)
+
+# Call this when starting a new level
+func on_level_started() -> void:
+	print("New level started! Gaining 25 HP")
+	heal(25)
 
 func die() -> void:
 	if is_dead:
 		return
-		
+	
 	is_dead = true
-	is_attacking = false
-	can_attack = false
+	print("Player has died!")
+	
+	# Stop all movement and attacks
 	velocity = Vector2.ZERO
+	is_attacking = false
 	
-	# Disable attack area
-	if attack_area:
-		attack_area.monitoring = false
+	# Play death animation if available
+	if animated_sprite and animated_sprite.sprite_frames.has_animation("die"):
+		animated_sprite.play("die")
 	
-	print("Agnar has fallen!")
+	# Show game over screen
+	var hud = get_tree().get_first_node_in_group("hud")
+	if hud and hud.has_method("show_game_over"):
+		hud.show_game_over()
+	
 	player_died.emit()
 
 func respawn() -> void:

@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dua7m8a7kywpa"]
+[gd_scene load_steps=6 format=3 uid="uid://dua7m8a7kywpa"]
 
 [ext_resource type="Script" uid="uid://ksyw1bhd1f6" path="res://scripts/Main.gd" id="1_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://fnl8a21mxvnl" path="res://scenes/player/Player.tscn" id="1_elqb8"]
-[ext_resource type="PackedScene" uid="uid://btgpwmvgrolnv" path="res://scenes/levels/Level.tscn" id="3_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://btgpwmvgrolnv" path="res://scenes/levels/level1.tscn" id="3_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://dhv55svf35k8n" path="res://scenes/enemies/Knight.tscn" id="3_rarhs"]
+[ext_resource type="Script" uid="uid://bnt0mkbxwuulo" path="res://scripts/EnemyManager.gd" id="4_vcsgt"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0bbpv")
@@ -12,3 +14,12 @@ z_index = 2
 
 [node name="Level" parent="." instance=ExtResource("3_0bbpv")]
 position = Vector2(-357, -65)
+
+[node name="EnemyManager" type="Node" parent="."]
+script = ExtResource("4_vcsgt")
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Knight" parent="Enemies" groups=["Enemies"] instance=ExtResource("3_rarhs")]
+z_index = 2
+position = Vector2(444, -90)
